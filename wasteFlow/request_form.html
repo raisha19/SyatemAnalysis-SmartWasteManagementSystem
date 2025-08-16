@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Waste Collection Request - WasteFlow</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <div class="branding">
+        <h1>WasteFlow</h1>
+        <p class="tagline">Smart Waste Management for Dhaka City</p>
+    </div>
+    <h2 class="page-title">Waste Collection Request</h2>
+</header>
+
+<main class="container">
+    <section class="form-section">
+        <form id="wasteForm">
+            <div class="form-group">
+                <label>User ID</label>
+                <input type="text" value="AUTO1234" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Location</label>
+                <select required>
+                    <option value="">Select Location</option>
+                    <option>Gulshan</option>
+                    <option>Banani</option>
+                    <option>Mirpur</option>
+                    <option>Uttara</option>
+                    <option>Tejgaon</option>
+                    <option>Mohakhali</option>
+                    <option>Mohammadpur</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Waste Type</label>
+                <select required>
+                    <option value="">Select Waste Type</option>
+                    <option>Organic</option>
+                    <option>Plastic</option>
+                    <option>E-waste</option>
+                    <option>Paper</option>
+                    <option>Mixed</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Quantity (kg)</label>
+                <input type="number" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label>Waste Details</label>
+                <textarea rows="4" placeholder="Describe the waste (e.g., type, smell, condition, packaging)"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Service Time</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="service" value="Regular" checked> Regular</label>
+                    <label><input type="radio" name="service" value="Express"> Express</label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn">Submit Request</button>
+        </form>
+    </section>
+</main>
+
+<footer>
+    <p>© 2025 WasteFlow | Developed for Smart Waste Management in Dhaka City</p>
+</footer>
+</body>
+</html>

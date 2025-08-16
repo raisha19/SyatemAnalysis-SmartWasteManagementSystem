@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Requests - WasteFlow</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <div class="branding">
+        <h1>WasteFlow</h1>
+        <p class="tagline">Smart Waste Management for Dhaka City</p>
+    </div>
+    <h2 class="page-title">My Waste Collection Requests</h2>
+</header>
+
+<main class="container">
+    <section class="table-section">
+        <table>
+            <thead>
+                <tr>
+                    <th>Request ID</th>
+                    <th>Status</th>
+                    <th>Bill (BDT)</th>
+                    <th>Bill Status</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>REQ001</td>
+                    <td>Pending</td>
+                    <td>200</td>
+                    <td class="unpaid">Unpaid</td>
+                    <td>2025-08-14 10:30</td>
+                    <td>
+                        <button class="btn small">Update</button>
+                        <button class="btn small danger">Delete</button>
+                        <button class="btn small pay">Pay Bill</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>REQ002</td>
+                    <td>Collected</td>
+                    <td>350</td>
+                    <td class="paid">Paid</td>
+                    <td>2025-08-13 15:10</td>
+                    <td>
+                        <button class="btn small">Generate Bill</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<footer>
+    <p>© 2025 WasteFlow | Developed for Smart Waste Management in Dhaka City</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Bin Input</title>
+    <link rel="stylesheet" href="smartbin.css">
+</head>
+<body>
+    <header>
+        <h1>🌿 Smart Bin Data Input</h1>
+    </header>
+
+    <main>
+        <section id="add-bin-section">
+            <h2>Add / Update Bin Data (Simulated IoT)</h2>
+            <form id="bin-form">
+                <label for="bin-id">Bin ID:</label>
+                <input type="text" id="bin-id" required>
+
+                <label for="bin-location">Location:</label>
+                <input type="text" id="bin-location" required>
+
+                <label for="bin-level">Fill Level (%):</label>
+                <input type="number" id="bin-level" min="0" max="100" required>
+
+                <button type="submit">Submit Data</button>
+            </form>
+
+            <button id="go-dashboard">Go to Dashboard</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>Smart Waste Management System 🌱 | Input Page</p>
+    </footer>
+
+    <script>
+        document.getElementById('bin-form').addEventListener('submit', function(e){
+            e.preventDefault();
+            const id = document.getElementById('bin-id').value;
+            const location = document.getElementById('bin-location').value;
+            const level = parseInt(document.getElementById('bin-level').value);
+
+            let bins = JSON.parse(localStorage.getItem('bins')) || [];
+
+            const existingIndex = bins.findIndex(b => b.id === id);
+            if(existingIndex !== -1){
+                bins[existingIndex] = {id, location, level};
+            } else {
+                bins.push({id, location, level});
+            }
+
+            localStorage.setItem('bins', JSON.stringify(bins));
+            alert('Bin data saved successfully!');
+
+            this.reset();
+        });
+
+        document.getElementById('go-dashboard').addEventListener('click', () => {
+            window.location.href = 'bin_dashboard.html';
+        });
+    </script>
+</body>
+</html>

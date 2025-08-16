@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Bin Dashboard - Interactive</title>
+<link rel="stylesheet" href="smartbin.css">
+<style>
+/* Progress bar container */
+.progress-container {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 20px;
+    margin-top: 0.5rem;
+}
+
+/* Progress bar fill */
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    line-height: 20px;
+    border-radius: 10px;
+    transition: width 0.5s ease;
+}
+
+.low-fill { background-color: #2e8b57; }   /* green */
+.medium-fill { background-color: #ffa500; } /* orange */
+.full-fill { background-color: #ff0000; }   /* red */
+</style>
+</head>
+<body>
+<header>
+    <h1>🌿 Smart Bin Monitoring Dashboard (Interactive)</h1>
+</header>
+
+<main>
+    <section id="bin-status-section">
+        <h2>Bin Status Overview</h2>
+        <div id="bin-cards-container"></div>
+    </section>
+
+    <section id="alerts-section">
+        <h2>Full Bin Alerts</h2>
+        <ul id="alerts-list"></ul>
+    </section>
+
+    <section>
+        <button id="back-input">Go to Input Page</button>
+    </section>
+</main>
+
+<footer>
+    <p>Smart Waste Management System 🌱 | Interactive Dashboard</p>
+</footer>
+
+<script>
+let bins = JSON.parse(localStorage.getItem('bins')) || [];
+
+// Render bin cards with progress bars
+function renderBins() {
+    const container = document.getElementById('bin-cards-container');
+    container.innerHTML = '';
+
+    bins.forEach(bin => {
+        const card = document.createElement('div');
+        card.className = 'bin-card';
+        const fillClass = getLevelClass(bin.level);
+        card.innerHTML = `
+            <h3>Bin ${bin.id}</h3>
+            <p><strong>Location:</strong> ${bin.location}</p>
+            <p><strong>Status:</strong> ${getLevelText(bin.level)}</p>
+            <div class="progress-container">
+                <div class="progress-fill ${fillClass}" style="width: ${bin.level}%;">
+                    ${bin.level}%
+                </div>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function getLevelText(level) {
+    if(level < 50) return 'Low';
+    if(level < 80) return 'Medium';
+    return 'Full';
+}
+
+function getLevelClass(level){
+    if(level < 50) return 'low-fill';
+    if(level < 80) return 'medium-fill';
+    return 'full-fill';
+}
+
+function triggerAlerts(){
+    const alertsContainer = document.getElementById('alerts-list');
+    alertsContainer.innerHTML = '';
+    bins.forEach(bin => {
+        if(bin.level >= 80){
+            const li = document.createElement('li');
+            li.textContent = `⚠️ Bin ${bin.id} at ${bin.location} is ${getLevelText(bin.level)} (${bin.level}%)`;
+            alertsContainer.appendChild(li);
+        }
+    });
+}
+
+// Simulate real-time IoT updates
+function simulateIoT(){
+    bins = bins.map(bin => {
+        let newLevel = bin.level + Math.floor(Math.random()*6);
+        if(newLevel > 100) newLevel = 100;
+        return {...bin, level: newLevel};
+    });
+    localStorage.setItem('bins', JSON.stringify(bins));
+    renderBins();
+    triggerAlerts();
+}
+
+document.getElementById('back-input').addEventListener('click', () => {
+    window.location.href = 'bin_input.html';
+});
+
+// Initial render
+renderBins();
+triggerAlerts();
+
+// Update every 5 seconds
+setInterval(simulateIoT, 5000);
+</script>
+</body>
+</html>

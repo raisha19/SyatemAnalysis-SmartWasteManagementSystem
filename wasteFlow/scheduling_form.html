@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Schedule Collection Task</title>
+  <link rel="stylesheet" href="scheduling.css">
+</head>
+<body>
+  <header>
+    <h1>Collection Scheduling & Task Assignment</h1>
+  </header>
+
+  <section class="form-section">
+    <form id="scheduleForm">
+
+      <!-- Step 1: Area Info -->
+      <h2>Step 1: Select Area</h2>
+      <label for="area">City Area:</label>
+      <select id="area" required>
+        <option value="">-- Select Area --</option>
+        <option value="Mohakhali">Mohakhali</option>
+        <option value="Banani">Banani</option>
+        <option value="Gulshan">Gulshan</option>
+        <option value="Uttara">Uttara</option>
+      </select>
+
+      <!-- Step 2: User Info -->
+      <h2>Step 2: User/Building Information</h2>
+      <label for="user">Building/User:</label>
+      <select id="user" required>
+        <option value="">-- Select User --</option>
+      </select>
+
+      <!-- New Detailed Address Input -->
+      <label for="address">Full Address (Road No, House/Flat No, Landmark):</label>
+      <textarea id="address" rows="3" placeholder="e.g., Road 12, House 45, Near Mohakhali Bus Stand" required></textarea>
+
+      <!-- Step 3: Schedule -->
+      <h2>Step 3: Set Schedule</h2>
+      <label for="date">Pickup Date:</label>
+      <input type="date" id="date" required>
+
+      <label for="time">Pickup Time:</label>
+      <select id="time" required>
+        <option value="">-- Select Time --</option>
+        <option value="Morning">Morning</option>
+        <option value="Afternoon">Afternoon</option>
+        <option value="Evening">Evening</option>
+      </select>
+
+      <!-- Step 4: Assign Collector -->
+      <h2>Step 4: Assign Collector</h2>
+      <label for="collector">Collector Team:</label>
+      <select id="collector" required>
+        <option value="">-- Select Collector --</option>
+        <option value="C001">Collector Team 1</option>
+        <option value="C002">Collector Team 2</option>
+        <option value="C003">Collector Team 3</option>
+      </select>
+
+      <button type="submit">Submit Schedule</button>
+    </form>
+  </section>
+
+  <p style="text-align:center;">
+    <a href="scheduling_table.html">Go to Task Table</a>
+  </p>
+
+  <script src="scheduling.js"></script>
+</body>
+</html>

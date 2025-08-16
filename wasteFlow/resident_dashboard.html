@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resident Dashboard – Smart Waste</title>
+  <link rel="stylesheet" href="common.css">
+  <script src="dashboard.js" defer></script>
+  <script defer>
+    document.addEventListener('DOMContentLoaded', ()=>{
+      populateUsers('areaSel','userSel');
+
+      document.getElementById('applyFilter').addEventListener('click', ()=>{
+        const a = document.getElementById('areaSel').value;
+        const u = document.getElementById('userSel').value;
+        const mine = getTasks().filter(t => (!a || t.area===a) && (!u || t.user===u));
+        const s = computeTaskStats(mine);
+        fillText('tTotal', s.total); fillText('tSch', s.scheduled); fillText('tDone', s.done);
+        renderTasks('myTasksBody', mine);
+      });
+
+      // initial
+      renderTasks('myTasksBody', []);
+    });
+  </script>
+</head>
+<body>
+<header><h1>Resident / Industry Dashboard</h1></header>
+<div class="container">
+
+  <div class="card">
+    <h3>Your Location</h3>
+    <div class="toolbar">
+      <select id="areaSel">
+        <option value="">-- Select Area --</option>
+        <option>Mohakhali</option><option>Banani</option><option>Gulshan</option><option>Uttara</option>
+      </select>
+      <select id="userSel"><option value="">-- Select User --</option></select>
+      <button class="btn" id="applyFilter">Load My Schedule</button>
+      <a class="btn" href="../scheduling/scheduling_form.html">Request / Schedule Pickup</a>
+    </div>
+  </div>
+
+  <div class="grid cards">
+    <div class="card"><h3>My Total Tasks</h3><div class="big" id="tTotal">0</div></div>
+    <div class="card"><h3>Upcoming (Scheduled)</h3><div class="big" id="tSch">0</div></div>
+    <div class="card"><h3>Completed</h3><div class="big" id="tDone">0</div></div>
+  </div>
+
+  <h2 class="section-title">My Pickup Schedule</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Area</th><th>User</th><th>Address</th>
+        <th>Date</th><th>Time</th><th>Collector</th><th>Status</th><th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="myTasksBody"></tbody>
+  </table>
+
+  <div class="card actions">
+    <h3>Other Actions</h3>
+    <a class="btn" href="../categorization/categorization.html">See City Waste Trends</a>
+  </div>
+</div>
+</body>
+</html>
