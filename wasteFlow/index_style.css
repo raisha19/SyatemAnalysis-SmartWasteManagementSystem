@@ -1,0 +1,255 @@
+/* ===== WasteFlow Global Styles ===== */
+body.wf-body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f9f4;
+  color: #222;
+}
+
+a {
+  text-decoration: none;
+  color: #d32f2f;
+}
+
+h1, h2, h3 {
+  margin: 0;
+}
+
+/* ===== Header ===== */
+.wf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2e7d32;
+  color: white;
+  padding: 12px 24px;
+}
+
+.wf-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.wf-nav a {
+  margin-left: 16px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.wf-nav a[aria-current="page"],
+.wf-nav a:hover {
+  background-color: #1b5e20;
+  color: #fff;
+}
+
+/* ===== Footer ===== */
+.wf-footer {
+  text-align: center;
+  padding: 12px;
+  background-color: #2e7d32;
+  color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+/* ===== Main Layout ===== */
+.wf-main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 24px auto 80px;
+  max-width: 1200px;
+  gap: 24px;
+}
+
+/* ===== Auth Card ===== */
+.auth-layout {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.auth-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  flex: 1 1 500px;
+  min-width: 350px;
+}
+
+.auth-card h1.wf-h1 {
+  color: #2e7d32;
+  margin-bottom: 8px;
+  font-size: 1.8rem;
+}
+
+.auth-card .wf-subtext {
+  margin-bottom: 16px;
+  color: #555;
+}
+
+/* ===== Tabs ===== */
+.tabs {
+  display: flex;
+  margin-bottom: 16px;
+}
+
+.tab {
+  flex: 1;
+  padding: 8px 16px;
+  text-align: center;
+  background-color: #e8f5e9;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.tab.active {
+  background-color: #2e7d32;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ===== Form Styles ===== */
+.tab-panel {
+  display: block;
+}
+
+.tab-panel.hidden {
+  display: none;
+}
+
+.wf-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.wf-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.wf-field label {
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.wf-field input,
+.wf-field select {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  transition: border-color 0.3s;
+}
+
+.wf-field input:focus,
+.wf-field select:focus {
+  border-color: #2e7d32;
+  outline: none;
+}
+
+/* ===== Inline Fields (OTP Button) ===== */
+.wf-inline {
+  display: flex;
+  gap: 8px;
+}
+
+.wf-inline input {
+  flex: 1;
+}
+
+.wf-btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.wf-btn.primary {
+  background-color: #2e7d32;
+  color: #fff;
+}
+
+.wf-btn.primary:hover {
+  background-color: #1b5e20;
+}
+
+.wf-btn.ghost {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.wf-btn.ghost:hover {
+  background-color: #c8e6c9;
+}
+
+/* ===== Radio & Checkbox ===== */
+.wf-radio,
+.wf-check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+/* ===== Actions ===== */
+.wf-actions {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ===== Help Section ===== */
+.auth-help {
+  flex: 1 1 250px;
+  min-width: 200px;
+  background-color: #e8f5e9;
+  border-radius: 12px;
+  padding: 16px;
+  height: fit-content;
+}
+
+.auth-help h2.wf-h2 {
+  color: #2e7d32;
+  margin-bottom: 12px;
+}
+
+.bullets {
+  padding-left: 16px;
+}
+
+.bullets li {
+  margin-bottom: 6px;
+  line-height: 1.4;
+  font-size: 0.95rem;
+}
+
+/* ===== Hidden Utility ===== */
+.hidden {
+  display: none;
+}
+
+/* ===== Responsive ===== */
+@media(max-width: 900px) {
+  .wf-grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .auth-layout {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .auth-help {
+    order: -1;
+  }
+}

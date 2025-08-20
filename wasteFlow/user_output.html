@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>WasteFlow — User Management (Output)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style2.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="wf-body">
+  <header class="wf-header">
+    <div class="wf-title">WasteFlow — User Management (Output)</div>
+    <nav class="wf-nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="user_input.html">Input</a>
+    </nav>
+  </header>
+
+  <main class="wf-main">
+    <section class="wf-section">
+      <h2 class="wf-h2">Registered Users</h2>
+
+      <!-- Filters -->
+      <form class="wf-form compact" onsubmit="event.preventDefault();">
+        <div class="wf-grid-4">
+          <div class="wf-field">
+            <label for="fRole">Role</label>
+            <select id="fRole">
+              <option value="All">All</option>
+              <option value="Resident">Resident</option>
+              <option value="Collector">Collector</option>
+              <option value="Admin">Admin</option>
+            </select>
+          </div>
+          <div class="wf-field">
+            <label for="fWard">Ward</label>
+            <input id="fWard" type="number" min="1" max="100" placeholder="e.g., 12" />
+          </div>
+          <div class="wf-field">
+            <label for="fSearch">Search Name/Mobile</label>
+            <input id="fSearch" type="text" placeholder="Type to filter..." />
+          </div>
+          <div class="wf-actions end">
+            <button class="wf-btn ghost" onclick="resetFilters()">Reset</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Table -->
+      <div class="table-scroll">
+        <table class="wf-table" id="usersTable">
+          <thead>
+            <tr>
+              <th>User ID</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Ward</th>
+              <th>Mobile</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>U1001</td><td>Md. Rahim</td><td>Resident</td>
+              <td>12</td><td>01711112222</td><td>Active</td>
+              <td>
+                <button class="wf-btn small edit" onclick="editUser(this)">Edit</button>
+                <button class="wf-btn small delete" onclick="deleteUser(this)">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td>U1002</td><td>Shila Akter</td><td>Resident</td>
+              <td>10</td><td>01733334444</td><td>Active</td>
+              <td>
+                <button class="wf-btn small edit" onclick="editUser(this)">Edit</button>
+                <button class="wf-btn small delete" onclick="deleteUser(this)">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td>U1003</td><td>Jamal</td><td>Collector</td>
+              <td>12</td><td>01855556666</td><td>Active</td>
+              <td>
+                <button class="wf-btn small edit" onclick="editUser(this)">Edit</button>
+                <button class="wf-btn small delete" onclick="deleteUser(this)">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td>U1004</td><td>Nadia</td><td>Admin</td>
+              <td>09</td><td>01977778888</td><td>Suspended</td>
+              <td>
+                <button class="wf-btn small edit" onclick="editUser(this)">Edit</button>
+                <button class="wf-btn small delete" onclick="deleteUser(this)">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td>U1005</td><td>Sohan</td><td>Collector</td>
+              <td>15</td><td>01699990000</td><td>Active</td>
+              <td>
+                <button class="wf-btn small edit" onclick="editUser(this)">Edit</button>
+                <button class="wf-btn small delete" onclick="deleteUser(this)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Charts -->
+    <section class="wf-section">
+      <div class="wf-grid-2">
+        <div class="chart-box">
+          <h3>User Roles Distribution</h3>
+          <canvas id="roleChart" height="180"></canvas>
+        </div>
+        <div class="chart-box">
+          <h3>Users by Ward (Top)</h3>
+          <canvas id="wardChart" height="180"></canvas>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wf-footer">© 2025 WasteFlow · Dhaka City</footer>
+
+  <!-- Edit Modal -->
+  <div id="editModal" class="wf-modal">
+    <div class="wf-modal-content">
+      <h3>Edit User</h3>
+      <form id="editForm" onsubmit="saveEdit(event)">
+        <input type="hidden" id="editRowIndex" />
+        <label>Name</label>
+        <input type="text" id="editName" required />
+        <label>Role</label>
+        <select id="editRole">
+          <option>Resident</option>
+          <option>Collector</option>
+          <option>Admin</option>
+        </select>
+        <label>Ward</label>
+        <input type="number" id="editWard" min="1" max="100" />
+        <label>Mobile</label>
+        <input type="text" id="editMobile" />
+        <label>Status</label>
+        <select id="editStatus">
+          <option>Active</option>
+          <option>Suspended</option>
+        </select>
+        <div class="wf-actions end">
+          <button class="wf-btn ghost" type="button" onclick="closeModal()">Cancel</button>
+          <button class="wf-btn primary" type="submit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // ========== Filters ==========
+    const fRole = document.getElementById('fRole');
+    const fWard = document.getElementById('fWard');
+    const fSearch = document.getElementById('fSearch');
+    const table = document.getElementById('usersTable').getElementsByTagName('tbody')[0];
+
+    function resetFilters() {
+      fRole.value = 'All';
+      fWard.value = '';
+      fSearch.value = '';
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const roleVal = fRole.value.toLowerCase();
+      const wardVal = fWard.value.trim();
+      const q = fSearch.value.toLowerCase();
+
+      Array.from(table.rows).forEach(r => {
+        const role = r.cells[2].innerText.toLowerCase();
+        const ward = r.cells[3].innerText.trim();
+        const str = r.innerText.toLowerCase();
+        const okRole = (roleVal === 'all') || role.includes(roleVal);
+        const okWard = (!wardVal) || ward === wardVal;
+        const okSearch = (!q) || str.includes(q);
+        r.style.display = (okRole && okWard && okSearch) ? '' : 'none';
+      });
+    }
+    [fRole, fWard, fSearch].forEach(el => el.addEventListener('input', applyFilters));
+
+    // ========== Edit ==========
+    const modal = document.getElementById('editModal');
+    const form = document.getElementById('editForm');
+    let editRow;
+
+    function editUser(btn) {
+      editRow = btn.closest('tr');
+      document.getElementById('editRowIndex').value = editRow.rowIndex;
+      document.getElementById('editName').value = editRow.cells[1].innerText;
+      document.getElementById('editRole').value = editRow.cells[2].innerText;
+      document.getElementById('editWard').value = editRow.cells[3].innerText;
+      document.getElementById('editMobile').value = editRow.cells[4].innerText;
+      document.getElementById('editStatus').value = editRow.cells[5].innerText;
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+
+    function saveEdit(e) {
+      e.preventDefault();
+      editRow.cells[1].innerText = document.getElementById('editName').value;
+      editRow.cells[2].innerText = document.getElementById('editRole').value;
+      editRow.cells[3].innerText = document.getElementById('editWard').value;
+      editRow.cells[4].innerText = document.getElementById('editMobile').value;
+      editRow.cells[5].innerText = document.getElementById('editStatus').value;
+      closeModal();
+    }
+
+    // ========== Delete ==========
+    function deleteUser(btn) {
+      if (confirm("Are you sure you want to delete this user?")) {
+        btn.closest('tr').remove();
+      }
+    }
+
+    // ========== Charts ==========
+    new Chart(document.getElementById('roleChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Residents','Collectors','Admins'],
+        datasets: [{ data: [120, 40, 6] }]
+      },
+      options: { plugins: { legend: { position: 'bottom' } } }
+    });
+
+    new Chart(document.getElementById('wardChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Ward 9','Ward 10','Ward 12','Ward 15','Ward 20'],
+        datasets: [{ label: 'Users', data: [25, 30, 40, 18, 12] }]
+      },
+      options: { plugins: { legend: { display: false } } }
+    });
+  </script>
+</body>
+</html>

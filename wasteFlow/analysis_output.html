@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WasteFlow — Waste Categorization (Output)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="wf-body">
+  <header class="wf-header">
+    <div class="wf-title">WasteFlow — Waste Categorization (Output)</div>
+    <nav class="wf-nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="analysis_input.html">Input</a>
+    </nav>
+  </header>
+
+  <main class="wf-main">
+    <section class="wf-section">
+      <h2 class="wf-h2">Waste Categorization Report</h2>
+
+      <div class="table-scroll">
+        <table class="wf-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Ward</th>
+              <th>Organic (kg)</th>
+              <th>Plastic (kg)</th>
+              <th>E-Waste (kg)</th>
+              <th>Medical (kg)</th>
+              <th>Other (kg)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>2025-08-18</td><td>Ward 1</td><td>25</td><td>15</td><td>5</td><td>2</td><td>3</td></tr>
+            <tr><td>2025-08-18</td><td>Ward 2</td><td>30</td><td>12</td><td>4</td><td>3</td><td>5</td></tr>
+            <tr><td>2025-08-18</td><td>Ward 3</td><td>20</td><td>10</td><td>6</td><td>1</td><td>2</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="wf-section">
+      <h3>Waste Type Distribution</h3>
+      <canvas id="wasteTypeChart" height="180"></canvas>
+    </section>
+
+    <section class="wf-section">
+      <h3>Ward-wise Waste Collected</h3>
+      <canvas id="wardWasteChart" height="180"></canvas>
+    </section>
+  </main>
+
+  <footer class="wf-footer">© 2025 WasteFlow · Dhaka City</footer>
+
+  <script>
+    // Pie chart for waste type
+    new Chart(document.getElementById('wasteTypeChart'), {
+      type: 'pie',
+      data: {
+        labels: ['Organic','Plastic','E-Waste','Medical','Other'],
+        datasets: [{ data: [75,37,15,6,10], backgroundColor: ['#28a745','#ffc107','#6f42c1','#dc3545','#17a2b8'] }]
+      }
+    });
+
+    // Bar chart for ward-wise total waste
+    new Chart(document.getElementById('wardWasteChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Ward 1','Ward 2','Ward 3'],
+        datasets: [{ label: 'Total Waste (kg)', data: [50,54,39], backgroundColor: '#007bff' }]
+      },
+      options: { plugins: { legend: { display: false } } }
+    });
+  </script>
+</body>
+</html>
